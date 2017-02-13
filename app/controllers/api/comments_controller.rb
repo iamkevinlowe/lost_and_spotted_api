@@ -1,18 +1,39 @@
 class Api::CommentsController < ApplicationController
   def create
-    pet = Pet.find params[:pet_id]
-    comment = pet.comments.build comment_params
+    if pet = Pet.find_by_id(params[:pet_id])
+      comment = pet.comments.build(comment_params)
+      if comment.save
+        status = 200
+      else
+        comment = { errors: comment.errors }
+        status = 401
+      end
+    else
+      comment = {
+        errors: [I18n.t('api.failures.not_found', klass: 'Pet')]
+      }
+      status = 401
+    end
 
-    status = comment.save ? 200 : 401
-
-    render json: comment, status: 200
+    render json: comment, status: status
   end
 
   def destroy
-    # TODO: Consider finding pet with params[:pet_id] first?
-    comment = Comment.find params[:id]
-
-    status = comment.destroy ? 200 : 401
+    if pet = Pet.find_by_id(params[:pet_id])
+      if comment = Comment.find_by_id(params[:id])
+        status = comment.destroy ? 200 : 401
+      else
+        comment = {
+          errors: [I18n.t('api.failures.not_found', klass: 'Comment')]
+        }
+        status = 401
+      end
+    else
+      comment = {
+        errors: [I18n.t('api.failures.not_found', klass: 'Pet')]
+      }
+      status = 401
+    end
 
     render json: comment, status: status
   end
