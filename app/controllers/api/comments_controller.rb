@@ -1,4 +1,4 @@
-class CommentsController < ApplicationController
+class Api::CommentsController < ApplicationController
   def create
     pet = Pet.find params[:pet_id]
     comment = pet.comments.build comment_params

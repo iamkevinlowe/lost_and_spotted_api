@@ -1,4 +1,4 @@
-class PetsController < ApplicationController
+class Api::PetsController < ApplicationController
   def index
     pets = Pet.all
 
@@ -6,9 +6,11 @@ class PetsController < ApplicationController
   end
 
   def show
-    pet = Pet.find params[:id]
+    pet = Pet.where(id: params[:id]).first
 
-    render json: pet, status: 200
+    status = pet ? 200 : 401
+
+    render json: pet, status: status
   end
 
   def create

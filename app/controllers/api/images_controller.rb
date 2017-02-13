@@ -1,4 +1,4 @@
-class ImagesController < ApplicationController
+class Api::ImagesController < ApplicationController
   def create
     pet = Pet.find params[:pet_id]
     image = pet.images.build image_params
