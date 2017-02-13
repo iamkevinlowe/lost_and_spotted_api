@@ -9,7 +9,7 @@ class Api::ImagesController < ApplicationController
         status = 401
       end
     else
-      image = { errors: [I18t('api.failures.not_found', klass: 'Image')] }
+      image = { errors: [I18n.t('api.failures.not_found', klass: 'Image')] }
       status = 401
     end
 

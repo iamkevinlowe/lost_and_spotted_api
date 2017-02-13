@@ -10,7 +10,7 @@ class Api::PetsController < ApplicationController
     if pet = Pet.find_by_id(params[:id])
       status = 200
     else
-      pet = { errors: [I18t('api.failures.not_found', klass: 'Pet')] }
+      pet = { errors: [I18n.t('api.failures.not_found', klass: 'Pet')] }
       status = 401
     end
 
@@ -39,7 +39,7 @@ class Api::PetsController < ApplicationController
         status = 401
       end
     else
-      pet = { errors: [I18t('api.failures.not_found', klass: 'Pet')] }
+      pet = { errors: [I18n.t('api.failures.not_found', klass: 'Pet')] }
     end
 
     render json: pet, status: status
