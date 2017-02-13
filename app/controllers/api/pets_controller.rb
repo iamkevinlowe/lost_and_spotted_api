@@ -14,7 +14,7 @@ class Api::PetsController < ApplicationController
   end
 
   def create
-    pet = Pet.new Pet_params
+    pet = Pet.new pet_params
 
     status = Pet.save ? 200 : 401
 
