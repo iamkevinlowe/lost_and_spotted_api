@@ -1,7 +1,7 @@
 class Api::PetsController < ApplicationController
   def index
     # TODO: Paginate
-    pets = Pet.all
+    pets = Pet.includes(:comments, :images).page(params[:page] || 1)
 
     render json: pets, status: 200
   end
